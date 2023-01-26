@@ -1,0 +1,36 @@
+# 0 - Adicionando o kubernetes
+# 1 - Primero, crear el redireccionamiento | k3d cluster create micluster -p "80:30000@loadbalancer"
+# 2 - crear archivo
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  web-pagina
+spec:
+  selector:
+    matchLabels:
+      app: web-pagina
+  template:
+    metadata:
+      labels:
+        app:  web-pagina
+    spec:
+      containers:
+        - name: site-cool
+          image: damarisbetania/conversao-temperatura:v1
+          ports:
+            - containerPort:  8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-pagina-cool
+spec:
+  selector:
+    app: web-pagina
+  ports:
+  - targetPort: 8080
+    port: 80
+    nodePort: 30000
+  type: NodePort
