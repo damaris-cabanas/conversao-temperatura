@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: site-cool
-          image: damarisbetania/conversao-temperatura:v1
+          image: damarisbetania/conversao-temperatura:{{TAG}}
           ports:
             - containerPort:  8080
 
